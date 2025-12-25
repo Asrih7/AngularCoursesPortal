@@ -1,0 +1,183 @@
+<div class="auth-container">
+  <div class="row g-0 vh-100">
+    
+    <!-- Animation Column - Left Side -->
+    <div class="col-lg-6 d-none d-lg-flex animation-column">
+      <div class="animation-wrapper d-flex flex-column justify-content-center align-items-center h-100">
+        <div class="animation-content text-center">
+          <div class="animation-placeholder">
+          <!-- Replace the img tag with this for Lottie Player -->
+<lottie-player
+  src="https://assets9.lottiefiles.com/packages/lf20_ktwnwv5m.json"
+  background="transparent"
+  speed="1"
+  style="width: 100%; max-width: 400px; height: auto; margin: 0 auto; display: block;"
+  loop
+  autoplay>
+</lottie-player>
+          </div>
+          <div class="animation-text mt-4 px-4">
+            <h3 class="fw-bold mb-3">Welcome Back!</h3>
+            <p class="lead fw-bold mb-3">Enter your credentials to access premium Angular courses and continue your learning journey.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Login Form Column - Right Side -->
+    <div class="col-lg-6 col-12 d-flex align-items-center justify-content-center form-column">
+      <div class="auth-card w-100 mx-auto">
+        
+        <!-- Student Login -->
+        <div *ngIf="!showAdmin">
+          <!-- Header -->
+          <div class="auth-header text-center mb-4">
+            <h1 class="auth-title mb-3">Welcome Back</h1>
+            <p class="auth-subtitle">Enter your credentials to continue</p>
+          </div>
+
+          <form (ngSubmit)="login()" class="auth-form">
+            
+            <!-- Email Address -->
+            <div class="form-group mb-3">
+              <label for="email" class="form-label fw-medium mb-2">Email Address</label>
+              <input 
+                id="email"
+                [(ngModel)]="email" 
+                name="email"
+                type="email" 
+                class="form-control" 
+                placeholder="you@example.com"
+                required>
+            </div>
+
+            <!-- Password -->
+            <div class="form-group mb-3">
+              <label for="password" class="form-label fw-medium mb-2">Password</label>
+              <div class="password-input">
+                <input 
+                  id="password"
+                  [(ngModel)]="password" 
+                  name="password"
+                  [type]="showPassword ? 'text' : 'password'" 
+                  class="form-control" 
+                  placeholder="Enter your password"
+                  required>
+                <button type="button" class="password-toggle" (click)="togglePasswordVisibility('password')">
+                  <i class="bi" [ngClass]="showPassword ? 'bi-eye-slash' : 'bi-eye'"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- Remember & Forgot -->
+            <div class="d-flex justify-content-between align-items-center mb-4">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="rememberMe">
+                <label class="form-check-label" for="rememberMe">Remember me</label>
+              </div>
+              <a href="#" class="text-decoration-none small">Forgot Password?</a>
+            </div>
+
+            <!-- Login Button -->
+            <button 
+              type="submit"
+              [disabled]="!email || !password || loading" 
+              class="btn btn-primary w-100 py-2 mb-3">
+              <span *ngIf="!loading">
+                LOGIN
+              </span>
+              <span *ngIf="loading">
+                <div class="spinner-border spinner-border-sm me-2" role="status"></div>
+                Logging in...
+              </span>
+            </button>
+
+            <!-- Register Link -->
+            <div class="text-center mb-3">
+              <p class="text-muted small">
+                Don't have an account? 
+                <a routerLink="/register" class="text-decoration-none fw-medium">Register here</a>
+              </p>
+            </div>
+
+            <!-- Error Message -->
+            <div *ngIf="error" class="alert alert-danger mb-0" role="alert">
+              <i class="bi bi-exclamation-triangle me-2"></i>
+              {{ error }}
+            </div>
+
+            <!-- Admin Access -->
+            <div class="text-center mt-4 pt-3 border-top">
+              <button type="button" (click)="toggleAdmin($event)" class="btn btn-outline-secondary btn-sm">
+                <i class="bi bi-shield-lock me-1"></i>
+                Admin Access
+              </button>
+            </div>
+
+          </form>
+        </div>
+
+        <!-- Admin Login -->
+        <div *ngIf="showAdmin">
+          <!-- Header -->
+          <div class="auth-header text-center mb-4">
+            <h1 class="auth-title mb-3">Admin Access</h1>
+            <p class="auth-subtitle">Enter admin password to continue</p>
+          </div>
+
+          <form (ngSubmit)="adminLogin()" class="auth-form">
+            
+            <!-- Admin Password -->
+            <div class="form-group mb-4">
+              <label for="adminPassword" class="form-label fw-medium mb-2">Admin Password</label>
+              <div class="password-input">
+                <input 
+                  id="adminPassword"
+                  [(ngModel)]="adminPassword" 
+                  name="adminPassword"
+                  [type]="showAdminPassword ? 'text' : 'password'" 
+                  class="form-control" 
+                  placeholder="Enter admin password"
+                  required>
+                <button type="button" class="password-toggle" (click)="togglePasswordVisibility('adminPassword')">
+                  <i class="bi" [ngClass]="showAdminPassword ? 'bi-eye-slash' : 'bi-eye'"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- Admin Login Button -->
+            <button 
+              type="submit"
+              [disabled]="!adminPassword || adminLoading" 
+              class="btn btn-warning w-100 py-2 mb-3">
+              <span *ngIf="!adminLoading">
+                ACCESS ADMIN PANEL
+              </span>
+              <span *ngIf="adminLoading">
+                <div class="spinner-border spinner-border-sm me-2" role="status"></div>
+                Authenticating...
+              </span>
+            </button>
+
+            <!-- Back to Normal Login -->
+            <div class="text-center">
+              <button type="button" (click)="toggleAdmin($event)" class="btn btn-link text-decoration-none p-0">
+                <i class="bi bi-arrow-left me-1"></i>
+                Back to Student Login
+              </button>
+            </div>
+
+            <!-- Admin Error -->
+            <div *ngIf="adminError" class="alert alert-danger mt-3 mb-0" role="alert">
+              <i class="bi bi-exclamation-triangle me-2"></i>
+              {{ adminError }}
+            </div>
+
+          </form>
+        </div>
+
+      </div>
+    </div>
+    
+  </div>
+</div>
