@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, inject, ChangeDetectorRef } from '@angula
 import { Firestore, collection, doc, getDoc, addDoc, getDocs } from '@angular/fire/firestore';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../services/auth';
-import { Subscription } from 'rxjs';
+import { Subscription, firstValueFrom } from 'rxjs';
 import { CommonModule } from '@angular/common';
 
 interface AccessLog {
@@ -45,10 +45,10 @@ export class Dashboard implements OnInit, OnDestroy {
   loadingActivity: boolean = true;
   
   // Course URLs
-  private courseUrls = {
+  /*private courseUrls = {
     angular: 'https://asrihangularacademy.netlify.app/',
     interview: 'https://angularquestionscards.netlify.app/'
-  };
+  };*/
 
   private subscriptions: Subscription[] = [];
   private firestore = inject(Firestore);
@@ -182,12 +182,13 @@ export class Dashboard implements OnInit, OnDestroy {
   }
 
   private async getCurrentUser() {
-    return new Promise<any>((resolve) => {
-      const sub = this.authService.currentUser$.subscribe(user => {
-        resolve(user);
-        sub.unsubscribe();
-      });
-    });
+    // Use firstValueFrom to avoid TDZ and synchronous subscription issues
+    try {
+      return await firstValueFrom(this.authService.currentUser$);
+    } catch (e) {
+      console.error('Error getting current user:', e);
+      return null;
+    }
   }
 
   private getDateFromFirestore(timestamp: any): Date {
@@ -219,63 +220,68 @@ export class Dashboard implements OnInit, OnDestroy {
     return this.formatDate(date);
   }
 
-  async accessCourse(courseType: 'angular' | 'interview') {
-    try {
-      console.log('Accessing course:', courseType);
-      
-      // Get current user
-      const user = await this.getCurrentUser();
-      if (!user) {
-        this.router.navigate(['/login']);
-        return;
-      }
-      
-      // Check if approved
-      const userDoc = await getDoc(doc(this.firestore, 'users', user.uid));
-      const userData = userDoc.data() as UserData;
-      
-      if (!userData || userData.status !== 'approved') {
-        this.showModal(
-          'Access Denied',
-          'Your account is not approved yet. Please wait for admin approval.',
-          'error'
-        );
-        return;
-      }
-      
-      // Log access
-      const accessLogsCol = collection(this.firestore, 'accessLogs');
-      await addDoc(accessLogsCol, {
-        userId: user.uid,
-        email: user.email,
-        course: courseType,
-        accessedAt: new Date(),
-        userAgent: navigator.userAgent
-      });
-      
-      console.log('Course access logged');
-      
-      // Open course
-      const courseUrl = this.courseUrls[courseType];
-      this.showModal(
-        'Opening Course',
-        `Redirecting to ${courseType === 'angular' ? 'Angular Course' : 'Interview Questions'}...`,
-        'success',
-        () => {
-          window.open(courseUrl, '_blank');
-        }
-      );
-      
-      // Refresh activity
-      setTimeout(() => {
-        this.loadActivity();
-      }, 500);
-      
-    } catch (error) {
-      console.error('Error accessing course:', error);
-      this.showModal('Error', 'Error accessing course. Please try again.', 'error');
+// Update your dashboard.ts
+// Change the accessCourse method:
+
+async accessCourse(courseType: 'angular' | 'interview') {
+  try {
+    console.log('Accessing course:', courseType);
+    
+    // Get current user
+    const user = await this.getCurrentUser();
+    if (!user) {
+      this.router.navigate(['/login']);
+      return;
     }
+    
+    // Check if approved
+    const userDoc = await getDoc(doc(this.firestore, 'users', user.uid));
+    const userData = userDoc.data() as UserData;
+    
+    if (!userData || userData.status !== 'approved') {
+      this.showModal(
+        'Access Denied',
+        'Your account is not approved yet. Please wait for admin approval.',
+        'error'
+      );
+      return;
+    }
+    
+    // Log access
+    const accessLogsCol = collection(this.firestore, 'accessLogs');
+    await addDoc(accessLogsCol, {
+      userId: user.uid,
+      email: user.email,
+      course: courseType,
+      accessedAt: new Date(),
+      userAgent: navigator.userAgent
+    });
+    
+    console.log('Course access logged');
+    
+    // Navigate to local route instead of external URL
+    const route = courseType === 'angular' ? '/angular-course' : '/interview-questions';
+    
+    this.showModal(
+      'Opening Course',
+      `Opening ${courseType === 'angular' ? 'Angular Course' : 'Interview Questions'}...`,
+      'success',
+      () => {
+        // Navigate to the local Angular route
+        this.router.navigate([route]);
+      }
+    );
+    
+    // Refresh activity
+    setTimeout(() => {
+      this.loadActivity();
+    }, 500);
+    
+  } catch (error) {
+    console.error('Error accessing course:', error);
+    this.showModal('Error', 'Error accessing course. Please try again.', 'error');
   }
+}
 
   showModal(title: string, message: string, type: 'success' | 'error' | 'info' | 'warning', callback?: () => void) {
     const modalId = 'modal-' + Date.now();

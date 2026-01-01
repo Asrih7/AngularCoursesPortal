@@ -12,5 +12,6 @@ export const appConfig: ApplicationConfig = {
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore())
+    // No need for provideDomSanitizer in newer Angular versions
   ]
 };

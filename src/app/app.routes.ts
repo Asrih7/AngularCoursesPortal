@@ -7,7 +7,8 @@ import { Pending } from './components/pending/pending';
 import { ApprovedGuard } from './guards/approved-guard';
 import { AuthGuard } from './guards/auth-guard';
 import { AdminGuard } from './guards/admin.guard';
-
+import { VueAppComponent } from './vue-app/vue-app';
+import { ReactAppComponent } from './react-app/react-app';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -27,6 +28,17 @@ export const routes: Routes = [
     path: 'admin', 
     component: AdminPanel,
     canActivate: [AdminGuard]
+  },
+  // New routes for your apps - protected with same guards as dashboard
+  { 
+    path: 'angular-course', 
+    component: VueAppComponent,
+    canActivate: [AuthGuard, ApprovedGuard]
+  },
+  { 
+    path: 'interview-questions', 
+    component: ReactAppComponent,
+    canActivate: [AuthGuard, ApprovedGuard]
   },
   { path: '**', redirectTo: '/login' }
 ];

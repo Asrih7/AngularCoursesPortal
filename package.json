@@ -1,13 +1,22 @@
 {
   "name": "angular-courses-portal",
   "version": "0.0.0",
+ 
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
-  },
+    "test": "ng test",
+    "copy:vue": "cp -r ../vue-app/dist/* src/assets/external-apps/vue-app/",
+    "copy:react": "cp -r ../react-app/build/* src/assets/external-apps/react-app/",
+    "fix:paths": "if [[ \"$OSTYPE\" == \"darwin\"* ]]; then sed -i '' 's|href=\"/|href=\"./|g' src/assets/external-apps/vue-app/index.html && sed -i '' 's|src=\"/|src=\"./|g' src/assets/external-apps/vue-app/index.html && sed -i '' 's|href=\"/|href=\"./|g' src/assets/external-apps/react-app/index.html && sed -i '' 's|src=\"/|src=\"./|g' src/assets/external-apps/react-app/index.html; else sed -i 's|href=\"/|href=\"./|g' src/assets/external-apps/vue-app/index.html && sed -i 's|src=\"/|src=\"./|g' src/assets/external-apps/vue-app/index.html && sed -i 's|href=\"/|href=\"./|g' src/assets/external-apps/react-app/index.html && sed -i 's|src=\"/|src=\"./|g' src/assets/external-apps/react-app/index.html; fi",
+    "setup:apps": "mkdir -p src/assets/external-apps/vue-app src/assets/external-apps/react-app && npm run copy:vue && npm run copy:react && npm run fix:paths",
+    "build:all": "npm run setup:apps && ng build --prod",
+    "serve:all": "npm run build:all && npx http-server dist/angular-courses-portal -p 4200",
+    "dev": "npm run setup:apps && ng serve"
+  
+},
   "prettier": {
     "printWidth": 100,
     "singleQuote": true,

@@ -1,0 +1,27 @@
+<div class="app-wrapper">
+      <div class="app-header bg-success text-white p-3 shadow">
+        <div class="container d-flex justify-content-between align-items-center">
+          <div>
+            <h4 class="mb-0">
+              <i class="bi bi-code-slash me-2"></i>
+              Angular Course
+            </h4>
+          </div>
+          <button [routerLink]="['/dashboard']" class="btn btn-light btn-sm">
+            <i class="bi bi-arrow-left me-1"></i>
+            Back to Dashboard
+          </button>
+        </div>
+      </div>
+
+      <div class="app-content">
+        <iframe 
+          [src]="vueAppUrl | safe" 
+          frameborder="0"
+          width="100%"
+          height="100%"
+          sandbox="allow-same-origin allow-scripts allow-forms allow-popups"
+          class="iframe-container">
+        </iframe>
+      </div>
+    </div>
