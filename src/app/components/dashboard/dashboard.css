@@ -47,6 +47,8 @@
   z-index: 1055;
 }
 
+
+
 /* Responsive adjustments */
 @media (max-width: 768px) {
   .card-body {
@@ -57,3 +59,218 @@
     padding: 0.5rem 1rem;
   }
 }
+
+/* ===== COULEURS PERSONNALISÉES - SANS MODIFIER LE HTML ===== */
+
+/* Header principal - Couleur professionnelle */
+.card.bg-primary {
+  background: linear-gradient(135deg, #1a237e 0%, #283593 100%) !important;
+  border: none !important;
+}
+
+/* Cartes Angular - Rouge Angular officiel */
+.card.border-success,
+.card.border-success .card-header.bg-success,
+.card.border-success .btn-success {
+  border-color: #dd0031 !important;
+}
+
+.card.border-success .card-header.bg-success {
+  background: linear-gradient(135deg, #dd0031 0%, #c3002f 100%) !important;
+}
+
+.card.border-success .btn-success {
+  background: linear-gradient(135deg, #dd0031 0%, #c3002f 100%) !important;
+  border: none !important;
+  color: white !important;
+}
+
+.card.border-success .btn-success:hover {
+  background: linear-gradient(135deg, #c3002f 0%, #a90027 100%) !important;
+  box-shadow: 0 4px 12px rgba(221, 0, 49, 0.3) !important;
+}
+
+.card.border-success .text-success,
+.card.border-success .bi-check-circle-fill.text-success {
+  color: #dd0031 !important;
+}
+
+/* Cartes Interview - Bleu professionnel */
+.card.border-info,
+.card.border-info .card-header.bg-info,
+.card.border-info .btn-info {
+  border-color: #2d4059 !important;
+}
+
+.card.border-info .card-header.bg-info {
+  background: linear-gradient(135deg, #2d4059 0%, #4a6572 100%) !important;
+}
+
+.card.border-info .btn-info {
+  background: linear-gradient(135deg, #2d4059 0%, #4a6572 100%) !important;
+  border: none !important;
+  color: white !important;
+}
+
+.card.border-info .btn-info:hover {
+  background: linear-gradient(135deg, #26344a 0%, #3a5261 100%) !important;
+  box-shadow: 0 4px 12px rgba(45, 64, 89, 0.3) !important;
+}
+
+.card.border-info .text-info,
+.card.border-info .bi-check-circle-fill.text-info {
+  color: #2d4059 !important;
+}
+
+/* Icônes avec effet */
+.bi-filetype-ts.text-success {
+  color: #dd0031 !important;
+  background: rgba(221, 0, 49, 0.1);
+  padding: 15px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.bi-chat-left-text.text-info {
+  color: #2d4059 !important;
+  background: rgba(45, 64, 89, 0.1);
+  padding: 15px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+/* Bouton Logout */
+.btn.btn-light {
+  background: rgba(255, 255, 255, 0.1) !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  color: white !important;
+  backdrop-filter: blur(10px);
+}
+
+.btn.btn-light:hover {
+  background: rgba(255, 255, 255, 0.2) !important;
+  border-color: rgba(255, 255, 255, 0.5) !important;
+}
+
+/* Cartes d'information */
+.card.shadow .card-header {
+  background: #f8f9fa !important;
+  border-bottom: 2px solid #e9ecef !important;
+}
+
+.card.shadow .card-header h6 {
+  color: #2d4059 !important;
+}
+
+/* Progress bar améliorée */
+.progress {
+  background-color: #e9ecef !important;
+}
+
+.progress-bar.bg-success {
+  background: linear-gradient(90deg, #4CAF50 0%, #2E7D32 100%) !important;
+}
+
+/* Icônes dans les headers */
+.card-header .bi {
+  color: #1a237e !important;
+}
+
+/* Spinner */
+.spinner-border.text-primary {
+  color: #1a237e !important;
+  border-width: 3px;
+}
+
+.btn-outline-primary {
+  color: #1a237e !important;
+  border-color: #1a237e !important;
+}
+
+.btn-outline-primary:hover {
+  background-color: #1a237e !important;
+  color: white !important;
+}
+
+/* Icônes d'activité */
+.bi-play-circle.text-success {
+  color: #4CAF50 !important;
+}
+
+/* Badges et indicateurs */
+.badge {
+  background-color: #f0f4ff !important;
+  color: #1a237e !important;
+}
+
+/* Effets hover améliorés */
+.card.border-success:hover,
+.card.border-info:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1) !important;
+}
+
+.card.border-success:hover .card-header,
+.card.border-info:hover .card-header {
+  background-position: 100% 0;
+  transition: background-position 0.5s ease;
+}
+
+/* Animation pour le header */
+.card.bg-primary {
+  position: relative;
+  overflow: hidden;
+}
+
+.card.bg-primary::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  animation: shimmer 3s infinite;
+}
+
+
+
+/* Styles pour les icônes blanches dans les headers */
+.card.border-success .card-header .bi,
+.card.border-info .card-header .bi {
+  color: white !important;
+}
+
+@keyframes shimmer {
+  0% { left: -100%; }
+  100% { left: 100%; }
+}
+
+/* Texte amélioré */
+.card-title.mb-1 {
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.card-text.mb-0 {
+  opacity: 0.9;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .card.border-success .card-header.bg-success,
+  .card.border-info .card-header.bg-info {
+    padding: 0.75rem !important;
+  }
+  
+  .btn-success, .btn-info {
+    padding: 0.5rem 1rem !important;
+    font-size: 0.9rem !important;
+  }
+  
+  .bi-filetype-ts.text-success,
+  .bi-chat-left-text.text-info {
+    font-size: 2.5rem !important;
+    padding: 12px !important;
+  }
+}
+
