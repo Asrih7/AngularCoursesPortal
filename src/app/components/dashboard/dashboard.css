@@ -47,8 +47,6 @@
   z-index: 1055;
 }
 
-
-
 /* Responsive adjustments */
 @media (max-width: 768px) {
   .card-body {
@@ -233,8 +231,6 @@
   animation: shimmer 3s infinite;
 }
 
-
-
 /* Styles pour les icônes blanches dans les headers */
 .card.border-success .card-header .bi,
 .card.border-info .card-header .bi {
@@ -255,8 +251,181 @@
   opacity: 0.9;
 }
 
-/* Responsive */
+/* ===== SCROLLABLE SECTION SOLUTION ===== */
+
+/* Structure principale de la page */
+.scrollable-page-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* Header fixe en haut */
+.fixed-top-header {
+  position: sticky;
+  top: 0;
+  z-index: 1030;
+  flex-shrink: 0;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Contenu principal scrollable */
+.scrollable-main-content {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 20px 0;
+  background-color: #f8f9fa;
+}
+
+/* Personnalisation de la barre de défilement */
+.scrollable-main-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.scrollable-main-content::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+.scrollable-main-content::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #1a237e 0%, #283593 100%);
+  border-radius: 4px;
+}
+
+.scrollable-main-content::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #283593 0%, #1a237e 100%);
+}
+
+/* Pour Firefox */
+.scrollable-main-content {
+  scrollbar-width: thin;
+  scrollbar-color: #1a237e #f1f1f1;
+}
+
+/* Empêcher le scroll horizontal sur le body et html */
+body, html {
+  overflow-x: hidden;
+  max-width: 100%;
+}
+
+.scrollable-page-container {
+  overflow-x: hidden;
+  max-width: 100%;
+}
+
+/* Ajustements pour le contenu à l'intérieur */
+.scrollable-main-content .container {
+  padding-bottom: 2rem;
+}
+
+/* Assurer que les cartes s'adaptent bien */
+.scrollable-main-content .card {
+  margin-bottom: 1.5rem;
+}
+
+/* ===== BOTTOM LOGOUT SECTION - NEW STYLES ===== */
+
+.bottom-logout-section {
+  margin-top: 0.3rem;
+  margin-bottom: -8rem;
+  margin-left: -15px;
+  margin-right: -15px;
+}
+
+.bottom-logout-section .card {
+  border-radius: 0 !important;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1) !important;
+  margin-bottom: 0 !important;
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+}
+
+.bottom-logout-section .card-body {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.bottom-logout-section .card:hover {
+  transform: none;
+  box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.15) !important;
+}
+
+.bottom-logout-section .btn-light {
+  padding: 0.75rem 2rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.bottom-logout-section .btn{
+  margin-right: -18rem;
+}
+
+.bottom-logout-section .btn-light:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.3) !important;
+}
+
+/* Animation pour le footer */
+.bottom-logout-section .card.bg-primary::before {
+  animation: shimmer 4s infinite;
+}
+
+/* Ajustement du contenu */
+.scrollable-main-content .container {
+  padding-bottom: 0;
+}
+
+/* Responsive pour bottom logout */
 @media (max-width: 768px) {
+  .scrollable-main-content {
+    padding: 15px 0;
+  }
+  
+  .scrollable-main-content .container {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+  
+  .fixed-top-header .card-body {
+    padding: 1rem;
+  }
+  
+  .bottom-logout-section {
+    margin-top: 2rem;
+    margin-left: 0;
+    margin-right: 0;
+  }
+  
+  .bottom-logout-section .card {
+    width: 100%;
+    position: static;
+    left: auto;
+    right: auto;
+    margin-left: 0;
+    margin-right: 0;
+  }
+  
+  .bottom-logout-section .d-flex {
+    flex-direction: column;
+    text-align: center !important;
+  }
+  
+  .bottom-logout-section .text-end {
+    text-align: center !important;
+    margin-top: 1rem;
+  }
+  
+  .bottom-logout-section .btn-light {
+    width: 100%;
+    padding: 0.75rem 1.5rem;
+  }
+  
   .card.border-success .card-header.bg-success,
   .card.border-info .card-header.bg-info {
     padding: 0.75rem !important;
@@ -273,4 +442,3 @@
     padding: 12px !important;
   }
 }
-
